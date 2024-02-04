@@ -59,16 +59,16 @@ void run_strncmp21_test() {
 void strtok21_test(char str[MAX_LEN], char delim[MAX_LEN]) {
   printf("str: %s\ndelim: %s\n", str, delim);
 
-  char *token1 = strtok(str, delim);
-  char *token2 = strtok21(str, delim);
+  char *token = strtok(str, delim);
+  char *token21 = strtok21(str, delim);
 
   bool status = true;
 
-  while (token1 != NULL && token2 != NULL && status) {
-    token1 = strtok(NULL, delim);
-    token2 = strtok21(NULL, delim);
+  while (token != NULL && token21 != NULL && status) {
+    token = strtok(NULL, delim);
+    token21 = strtok21(NULL, delim);
 
-    if (strcmp(token1, token2) != 0) {
+    if (strcmp(token, token21) != 0) {
       status = false;
     }
   }
