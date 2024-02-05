@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdlib.h>
 
 int strncmp21(const char *str1, const char *str2, size_t n);

@@ -64,9 +64,11 @@ void strtok21_test(char str[MAX_LEN], char delim[MAX_LEN]) {
 
   bool status = true;
 
-  while (token != NULL && token21 != NULL && status) {
+  while (token != NULL && token21 != NULL) {
     token = strtok(NULL, delim);
     token21 = strtok21(NULL, delim);
+
+    printf("token: %s\ntoken21: %s\n", token, token21);
 
     if (strcmp(token, token21) != 0) {
       status = false;
