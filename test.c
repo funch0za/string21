@@ -1,5 +1,6 @@
 #include "test.h"
 #include <stdlib.h>
+#include <string.h>
 
 int main() {
   srand(time(NULL));
@@ -56,50 +57,6 @@ void run_strncmp21_test() {
   }
 }
 
-void strtok21_test(char str[MAX_LEN], char delim[MAX_LEN]) {
-  printf("str: %s\ndelim: %s\n", str, delim);
-
-  char *token = strtok(str, delim);
-  char *token21 = strtok21(str, delim);
-
-  bool status = true;
-
-  while (token != NULL && token21 != NULL) {
-    token = strtok(NULL, delim);
-    token21 = strtok21(NULL, delim);
-
-    printf("token: %s\ntoken21: %s\n", token, token21);
-
-    if (strcmp(token, token21) != 0) {
-      status = false;
-    }
-  }
-
-  if (status) {
-    puts("SUCCESS\n");
-  } else {
-    puts("FAIL\n");
-  }
-}
-
-void run_strtok21_test() {
-  puts("STRTOK TEST");
-
-  for (int i = 0; i < N_TESTS; ++i) {
-    printf("TEST #%d\n", i);
-    char str[MAX_LEN], delim[MAX_LEN];
-    int size_str, size_delim;
-
-    size_str = randint(MAX_LEN);
-    size_delim = randint(MAX_LEN);
-
-    randstr(str, size_str);
-    randstr(delim, size_delim);
-
-    strtok21_test(str, delim);
-  }
-}
-
 void memset21_test(char *str, size_t size, char c, int n) {
   char str_copy[MAX_LEN];
 
@@ -134,37 +91,3 @@ void run_memset21_test() {
   }
 }
 
-int randint(int d) {
-  int result = 0;
-  if (d != 0) {
-    result = rand() % d;
-  }
-  return result;
-}
-
-char randchr() { return '!' + rand() % 93; }
-
-char *randstr(char *str, size_t size) {
-  for (size_t i = 0; i < size; ++i) {
-    str[i] = randchr();
-  }
-  str[size] = '\0';
-  return str;
-}
-
-char *randdelim(char *delim, char *str, size_t size_delim, size_t size_str) {
-  size_t max_size = size_str;
-  if (max_size < size_delim) {
-    max_size = size_delim;
-  }
-
-  for (size_t i = 0; i < max_size; ++i) {
-    delim[i] = str[randint(size_str)];
-  }
-
-  for (size_t i = max_size; i < size_str; ++i) {
-    delim[i] = randchr();
-  }
-
-  return delim;
-}

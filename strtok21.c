@@ -1,38 +1,62 @@
 #include "string21.h"
 #include <string.h>
 
-char *strtok21(char *str, const char *delim) {
+char *strtok21(char str[], const char delim[]) {
   static char *buffer;
-  static int index;
-  char *token;
-  
+  static char shift; // сдвигаем строку на длину токена
+
   if (str != NULL) {
-    buffer = malloc(sizeof(char) * strlen(str));
-    strcpy(buffer, str);
-    index = 0;
+    buffer = str;
+    shift = 0;
+
+    // начинается ли строка с делиметора
+    
+    bool stop = false;
+    for (size_t i = 0; buffer[i] != '\0' && !stop; ++i) {
+      bool is_delim = false;
+      for (size_t j = 0; delim[j] != '\0'; ++j) {
+        if (buffer[i] == delim[j]) {
+          is_delim = true;
+        }
+      }
+
+      if (is_delim) {
+        ++shift;
+      } else {
+        stop = true;
+      }
+    }
   }
 
-  if (strlen(buffer) == 0) {
-    token = NULL;
+  buffer += shift;
+
+  if (*buffer == '\0') {
+    buffer = NULL;
   } else {
-    token = malloc(sizeof(char) * strlen(buffer));
-    strcpy(token, buffer);
-    bool find = false;
-    for (int i = 0; buffer[i] != '\0' && !find; ++i) {
-      for (int j = 0; delim[j] != '\0' && !find; ++j) {
+    bool found = false;
+
+    int d_count = 0;
+    for (size_t i = 0; buffer[i] != '\0' && !found; ++i) {
+      bool is_delim = false;
+      for (size_t j = 0; delim[j] != '\0'; ++j) {
         if (buffer[i] == delim[j]) {
-          token[i] = '\0';
-          index = i;
-          buffer += i + 1;
-          find = true;
+          is_delim = true;
         }
+      }
+
+      if (is_delim) {
+        ++d_count;
+      } else if (d_count != 0) {
+        found = true;
+        shift = i;
+        buffer[i - d_count] = '\0';
       }
     }
 
-    if (!find) {
-      buffer[0] = '\0';
+    if (!found) {
+      shift = strlen(buffer); // дошли до конца строки, свдигаем на '\0'
     }
   }
 
-  return token;
+  return buffer;
 }

@@ -1,7 +1,7 @@
 CC = gcc
 OUT = strings
 FLAGS = -Wall -Werror -Wextra -std=c11 -g -o $(OUT)
-FILES =  memset21.c strncmp21.c strtok21.c test.c 
+FILES =  memset21.c strncmp21.c strtok21.c test.c my_random.c
 
 all_tests:
 	$(CC) $(FLAGS) $(FILES) -DTEST_STRNCMP -DTEST_STRTOK -DTEST_MEMSET
