@@ -6,7 +6,7 @@
 #include <string.h>
 #include <time.h>
 
-#include "string21.h"
+#include "../string21.h"
 
 #define MAX_LEN 30
 #define N_TESTS 4

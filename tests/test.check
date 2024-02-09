@@ -1,0 +1,34 @@
+#include "../src/string21.h"
+#include "test_string21.h"
+
+#test test_strncmp21
+  char str[N][MAX_LEN];
+  get_strs(str);  
+  int n[N];
+  get_nums(n);
+
+  for (int i = 0; i < N; ++i) {
+    for (int j = 0; j < N; ++j) {
+      for (int k = 0; k < N; ++k) {
+        ck_assert_int_eq(strncmp21(str[i], str[j], n[k]),
+                         strncmp(str[i], str[j], n[k]));
+      }
+    }
+  }
+
+#test test_memset21
+  char str[N][MAX_LEN];
+  get_strs(str);
+  char c[N];
+  get_chrs(c);
+  int n[N];
+  get_nums(n);
+
+  for (int i = 0; i < N; ++i) {
+    for (int j = 0; j < N; ++j) {
+      for (int k = 0; k < N; ++k) {
+        ck_assert_ptr_eq(memset21(str[i], c[j], (size_t) n[k]),
+                         memset(str[i], c[j], (size_t) n[k]));
+      }
+    }
+  }
