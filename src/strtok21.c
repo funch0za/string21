@@ -1,7 +1,6 @@
 #include "string21.h"
 #include <string.h>
 
-
 char *strtok21(char str[], const char delim[]) {
   static char *buffer;
   static char shift; // сдвигаем строку на длину токена
@@ -11,7 +10,6 @@ char *strtok21(char str[], const char delim[]) {
     shift = 0;
 
     // начинается ли строка с делиметора
-
     bool stop = false;
     for (size_t i = 0; buffer[i] != '\0' && !stop; ++i) {
       bool is_delim = false;
@@ -27,6 +25,29 @@ char *strtok21(char str[], const char delim[]) {
         stop = true;
       }
     }
+
+    size_t len = 0;
+    for (len = 0; buffer[len] != '\0'; ++len);
+
+    // заканчивается ли строка делиметром
+    stop = false;
+    int end_shift = 0;
+    for (int i = len - 1; i >= 0 && !stop; --i) {
+      bool is_delim = false;
+      for (size_t j = 0; delim[j] != '\0'; ++j) {
+        if (buffer[i] == delim[j]) {
+          is_delim = true;
+        }
+      }
+
+      if (is_delim) {
+        ++end_shift;
+      } else {
+        stop = true;
+      }
+    }
+    
+    buffer[len - end_shift] = '\0';
   }
 
   buffer += shift;
@@ -37,6 +58,7 @@ char *strtok21(char str[], const char delim[]) {
     bool found = false;
 
     int d_count = 0;
+
     for (size_t i = 0; buffer[i] != '\0' && !found; ++i) {
       bool is_delim = false;
       for (size_t j = 0; delim[j] != '\0'; ++j) {
